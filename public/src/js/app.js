@@ -5,7 +5,10 @@ if ('serviceWorker' in navigator) {
   .register('/sw.js')
   .then(function() {
     console.log('Service worker Registered!')
-  });
+  })
+  .catch(function(err) {
+    console.log(err);
+  })
 }
 
 window.addEventListener('beforeinstallprompt', function(event) {
