@@ -78,10 +78,19 @@ function createCard() {
   sharedMomentsArea.appendChild(cardWrapper);
 }
 
-var url = 'https://httpbin.org/get';
+var url = 'https://httpbin.org/post';
 var networkDataReceived = false;
 
-fetch(url)
+fetch(url,{
+  method: "POST",
+  headers: {
+    'Content-type': 'application/json',
+    'Accept': 'application/json'
+  },
+  body: JSON.stringify({
+    message: 'Some message'
+  })
+})
   .then(function(res) {
     return res.json();
   })
@@ -102,6 +111,7 @@ if ('caches' in window) {
     .then(function(data) {
       console.log("From Cache", data);
       if (!networkDataReceived) {
+        clearCards();
         createCard();
       }
     })
