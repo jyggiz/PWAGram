@@ -84,3 +84,14 @@ self.addEventListener('fetch', function(event) {
   );
 })
 */
+
+// Network then Cache strategy
+/*self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    fetch(event.request)
+      .catch(function(err) {
+        return caches.match(event.request);
+      })
+  );
+})
+*/
