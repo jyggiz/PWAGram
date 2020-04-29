@@ -1,4 +1,4 @@
-var CACHE_STATIC_NAME = 'static-v12';
+var CACHE_STATIC_NAME = 'static-v15';
 var CACHE_DYNAMIC_NAME = 'dynamic-v2';
 var STATIC_FILES = [
   '/',
