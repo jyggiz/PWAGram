@@ -164,12 +164,12 @@ form.addEventListener('submit', function(event) {
         };
         writeData('sync-posts', post)
           .then(function() {
-            sw.sync.register('sync-new-post');
+            sw.sync.register('sync-new-posts');
           })
           .then(function() {
             var snackbarContainer = document.querySelector("#confirmation-toast");
             var data = { message: "Your post was saved for syncing" };
-            snackbarContainer.MaterialSnackBar.showSnackbar(data);
+            snackbarContainer.MaterialSnackbar.showSnackbar(data);
           })
           .catch(function(err) {
             console.log(err);
