@@ -137,8 +137,26 @@ form.addEventListener('submit', function(event) {
   if ('serviceWorker' in navigator && 'SyncManager' in window) {
     navigator.serviceWorker.ready
       .then(function(sw) {
-        sw.sync.register('sync-new-post');
+        var post = {
+          id: new Date().toISOString(),
+          title: titleInput.value,
+          location: locationInput.value
+        };
+        writeData('sync-posts', post)
+          .then(function() {
+            sw.sync.register('sync-new-post');
+          })
+          .then(function() {
+            var snackbarContainer = document.querySelector("#confirmation-toast");
+            var data = { message: "Your post was saved for syncing" };
+            snackbarContainer.MaterialSnackBar.showSnackbar(data);
+          })
+          .catch(function(err) {
+            console.log(err);
+          })
       })
+  } else {
+    
   }
 
 })
