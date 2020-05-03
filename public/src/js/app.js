@@ -32,7 +32,9 @@ function displayConfirmNotification() {
       dir: 'ltr',
       lang: 'en-US', // BCP-47
       vibrate: [100, 50, 200],
-      badge: '/src/images/icons/app-icon-96x96.png'
+      badge: '/src/images/icons/app-icon-96x96.png',
+      tag: 'confirm-notification',
+      renotify: true
     };
 
     navigator.serviceWorker.ready
