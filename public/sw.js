@@ -239,3 +239,7 @@ self.addEventListener('notificationclick', function(event) {
     console.log(action);
   }
 });
+
+self.addEventListener('notificationclose', function(event) {
+  console.log('Notification was closed', event);
+})
