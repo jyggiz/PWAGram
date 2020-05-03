@@ -1,7 +1,7 @@
 importScripts('/src/js/idb.js');
 importScripts('/src/js/utility.js');
 
-var CACHE_STATIC_NAME = 'static-v23';
+var CACHE_STATIC_NAME = 'static-v24';
 var CACHE_DYNAMIC_NAME = 'dynamic-v2';
 var STATIC_FILES = [
   '/',
@@ -195,9 +195,9 @@ self.addEventListener('sync', function(event) {
       readAllData('sync-posts')
         .then(function(data) {
           for (var dt of data) {
-            fetch('https://pwagram-29785.firebaseio.com/posts.json', {
+            fetch('https://us-central1-pwagram-29785.cloudfunctions.net/storePostData', {
               method: 'POST',
-              headres: {
+              headers: {
                 'Content-type': 'application/json',
                 'Accept': 'application/json'
               },
@@ -211,7 +211,10 @@ self.addEventListener('sync', function(event) {
             .then(function(res) {
               console.log('Send data', res);
               if (res.ok) {
-                deleteItemById('sync-posts', dt.id);
+                res.json()
+                  .then(function(resData) {
+                    deleteItemById('sync-posts', resData.id);
+                  })
               }
             })
             .catch(function(err) {

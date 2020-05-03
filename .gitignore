@@ -1,3 +1,8 @@
 .idea
 node_modules
 .DS_Store
+.firebaserc
+firebase.json
+package-lock.json
+/functions/
+/.firebase/
