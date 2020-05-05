@@ -53,17 +53,43 @@ function configurePushSub() {
     return;
   }
 
+  var reg;
   navigator.serviceWorker.ready
     .then(function(swreg) {
+      reg = swreg;
       return swreg.pushManager.getSubscription();
     })
     .then(function(sub) {
       if (sub === null) {
         // Create a new subscription
+        var vapidPublicKey = 'BGn0S8HDebOxHlLku04Ijgx8k76Fmu5R9BR73jb0bNoC0VKbhRrHQw7dAqx1P59eDYJ9VC5zlA2svOMWKaB_BWs';
+        var convertedVapidPublicKey = urlBase64ToUint8Array(vapidPublicKey);
+        return reg.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: convertedVapidPublicKey
+        });
       } else {
         // We have a subscription
       }
     })
+    .then(function(newSub) {
+      return fetch('https://pwagram-29785.firebaseio.com/subscriptions.json', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(newSub)
+      })
+    })
+    .then(function(res) {
+      if (res.ok) {
+        displayConfirmNotification();
+      }
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
 }
 
 function askForNotificationPermission() {
