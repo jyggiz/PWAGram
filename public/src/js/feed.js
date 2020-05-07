@@ -5,7 +5,7 @@ var sharedMomentsArea = document.querySelector('#shared-moments');
 var form = document.querySelector('form');
 var titleInput = document.querySelector('#title');
 var locationInput = document.querySelector('#location');
-var videoSelector = document.querySelector('#player');
+var videoPlayer = document.querySelector('#player');
 var canvas = document.querySelector('#canvas');
 var captureButton = document.querySelector('#capture-btn');
 var imagePicker = document.querySelector('#image-picker');
@@ -30,7 +30,14 @@ function initializeMedia() {
     };
   }
 
-  
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(function(stream) {
+      videoPlayer.srcObject = stream;
+      videoPlayer.style.display = 'block';
+    })
+    .catch(function(err) {
+      imagePickerArea.style.display = 'block';
+    })
 }
 
 function openCreatePostModal() {
@@ -65,6 +72,9 @@ function openCreatePostModal() {
 
 function closeCreatePostModal() {
     createPostArea.style.transform = "translateY(100vh)";
+    imagePickerArea.style.display = "none";
+    videoPlayer.style.display = "none";
+    canvas.style.display = "none";
 }
 
 shareImageButton.addEventListener('click', openCreatePostModal);
