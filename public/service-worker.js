@@ -1,4 +1,6 @@
 importScripts('workbox-sw.prod.v2.1.3.js');
+importScripts('/src/js/idb.js');
+importScripts('/src/js/utility.js');
 
 const workboxSW = new self.WorkboxSW();
 
@@ -28,6 +30,26 @@ workboxSW.router.registerRoute(
   })
 );
 
+workboxSW.router.registerRoute(
+  'https://pwagram-29785.firebaseio.com/posts.json',
+  function (args) {
+    return fetch(args.event.request)
+    .then(function(res) {
+      var clonedRes = res.clone();
+      clearStorage('posts')
+        .then(function () {
+          return clonedRes.json()
+        })
+        .then(function(data) {
+          for(var key in data) {
+            writeData('posts', data[key]);
+          }
+        })
+      return res;
+    });
+  }
+);
+
 workboxSW.precache([
   {
     "url": "404.html",
@@ -51,7 +73,7 @@ workboxSW.precache([
   },
   {
     "url": "service-worker.js",
-    "revision": "aacc5c9aa42e7226cf1442f592f4d639"
+    "revision": "4e17a6947700ceaf444288c51f5d4662"
   },
   {
     "url": "src/css/app.css",
@@ -95,7 +117,7 @@ workboxSW.precache([
   },
   {
     "url": "sw-base.js",
-    "revision": "41845e5cac8b7ba82244de03d1a903f0"
+    "revision": "d36e29e6114013c4a22e45b000d016ba"
   },
   {
     "url": "sw.js",
