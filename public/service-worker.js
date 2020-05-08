@@ -9,6 +9,21 @@ workboxSW.router.registerRoute(
   })
 );
 
+
+workboxSW.router.registerRoute(
+  'https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.indigo-pink.min.css', 
+  workboxSW.strategies.staleWhileRevalidate({
+    cacheName: 'material-css'
+  })
+);
+
+workboxSW.router.registerRoute(
+  /.*(?:firebasestorage\.googleapis)\.com.*$/,
+  workboxSW.strategies.staleWhileRevalidate({
+    cacheName: 'post-images'
+  })
+);
+
 workboxSW.precache([
   {
     "url": "404.html",
@@ -32,7 +47,7 @@ workboxSW.precache([
   },
   {
     "url": "service-worker.js",
-    "revision": "9f3fd8fe40279a83efe6987b54aa18cb"
+    "revision": "e03f12e6130b02eb6d1eaed00d663bd5"
   },
   {
     "url": "src/css/app.css",
@@ -76,7 +91,7 @@ workboxSW.precache([
   },
   {
     "url": "sw-base.js",
-    "revision": "7344b53e72dded35e0284d804c18531c"
+    "revision": "f08ecab12a4904520b6250eaefd4b642"
   },
   {
     "url": "sw.js",
