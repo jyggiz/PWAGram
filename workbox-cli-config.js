@@ -9,6 +9,7 @@ module.exports = {
   "swDest": "public/service-worker.js",
   "globIgnores": [
     "../workbox-cli-config.js",
-    "help/**"
+    "help/**",
+    "404.html"
   ]
 };
